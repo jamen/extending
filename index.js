@@ -12,11 +12,14 @@ var toObject = function toObject(item) {
   return res;
 };
 
-var extending = module.exports = function extending(input, extension) {
+var extending = module.exports = function extending(input, extension, alter) {
   var extendable = function extendable(create) {
-    return extending(extendable, create);
+    return extending(extendable, create, alter);
   };
   assign(extendable, extending.helpers, input, extension);
+  if (alter) {
+    alter(extendable);
+  }
   return extendable;
 };
 
